@@ -42,13 +42,13 @@ function deleteUser(req, res){
     .then( user => {
         !user
         ? res.status(404).json({message: "No such user is existing"})
-        : Thought.deleteMany({ _id: { $in: user.thoughts } });
-    })
-    .then( thoughts =>{
-        !thoughts
-        ? res.status(404).json({message: "The user is deleted successfully \n No such thoughts associated with that user"})
-        : res.status(200).json({message: "User and thoughts are deleted successfully"})
-    })
+        : Thought.deleteMany({ _id: { $in: user.thoughts } })
+        .then( thoughts =>{
+            !thoughts
+            ? res.status(404).json({message: "The user is deleted successfully \n No such thoughts associated with that user"})
+            : res.status(200).json({message: "User and thoughts are deleted successfully"})
+        });
+    })    
     .catch((err) => {
         res.status(500).json(err);
     });
@@ -74,4 +74,4 @@ function updateUser(req,res){
   
 
 }
-module.exports  = {getUsers, addNewUser, deleteUser, getUserById, updateUser};
+module.exports = {getUsers, addNewUser, deleteUser, getUserById, updateUser};
